@@ -1,0 +1,38 @@
+#!/bin/sh
+
+############################################
+#              COURSE PROJECT              #
+#                                          #
+# This program allows you to add names in  #
+# a text file. The information required    #
+# are: First name, Surname, Address, City, #
+# State and Zip.                           #
+#                                          #
+# The users can choose, at the menu, to    #
+# create, view, search and delete contacts.#
+#                                          #
+# Information should be delimited by ":"   #
+#                                          #
+# On program exit, the contents of the     #
+# file should be displayed, as well as the #
+# number of entries inside.                #
+############################################
+
+# getting action choice from the user
+echo "Please enter your choice of action:"
+echo "1) Create a contact"
+echo "2) View a contact"
+echo "3) Search a contact"
+echo "4) Delete a contact"
+
+read choice
+
+case $choice in
+	1) action="create a contact" ;;
+	2) action="view a contact" ;;
+	3) action="search for a contact" ;;
+	4) action="delete a contact" ;;
+	*) echo "Invalid choice!"; exit;
+esac
+
+echo "You have chosen to $action"

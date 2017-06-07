@@ -55,7 +55,7 @@ if [ "$choice" == "1" ]; then
 	echo -n "Please enter your Zip: "
 	read zip
         # Writing contents to a file
-        echo -e $name:$sname:$addr:$city:$state:$zip >> $fname
+        echo -e $name:$sname:$addr:$city:$state:$zip >> names.dat
 fi
 
 echo `cat names.dat`

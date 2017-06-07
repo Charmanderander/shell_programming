@@ -1,0 +1,13 @@
+#!/bin/sh
+
+retirement_age=65
+echo -n "Please enter your age: "
+read age
+
+if [[ ! "$age" =~ ^-?[0-9]+$ ]]; then
+	echo "Please enter an integer"
+elif [ "$age" -lt $retirement_age ]; then
+	echo "You are too young";
+else
+	echo "Time to retire bub";
+fi

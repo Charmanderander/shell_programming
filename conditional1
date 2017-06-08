@@ -9,5 +9,5 @@ if [[ ! "$age" =~ ^-?[0-9]+$ ]]; then
 elif [ "$age" -lt $retirement_age ]; then
 	echo "You are too young";
 else
-	echo "Time to retire bub";
+	echo "Time to retire";
 fi

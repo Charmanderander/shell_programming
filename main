@@ -19,7 +19,7 @@
 ############################################
 
 # Defining const variables
-$fname=names.dat
+fname=names.dat
 
 # getting action choice from the user
 echo "Please enter your choice of action:"
@@ -55,7 +55,11 @@ if [ "$choice" == "1" ]; then
 	echo -n "Please enter your Zip: "
 	read zip
         # Writing contents to a file
-        echo -e $name:$sname:$addr:$city:$state:$zip >> names.dat
+	if [ -f $fname ]; then
+        	echo -e $name:$sname:$addr:$city:$state:$zip >> $fname
+	else
+		echo -e $name:$sname:$addr:$city:$state:$zip > $fname
+	fi
 fi
 
 echo `cat names.dat`

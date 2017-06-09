@@ -1,0 +1,15 @@
+#!/bin/sh
+
+echo -n "Enter directory name: "
+
+read dirname
+
+if [ "$dirname" = "" ]; then
+	echo "Please enter a directory"
+elif [ -d $dirname -a -w $dirname ]; then
+	echo "it exists and is writable by this process!"
+	echo "Well done!" > $dirname/hello.txt
+
+else
+	echo "Directory does not exist!"
+fi

@@ -20,6 +20,10 @@
 
 # Defining const variables
 fname=names.dat
+choice=foo
+
+while [ ! $choice = "q" ]
+do
 
 # getting action choice from the user
 echo "Please enter your choice of action:"
@@ -27,6 +31,7 @@ echo "1) Create a contact"
 echo "2) View all contacts"
 echo "3) Search a contact"
 echo "4) Delete a contact"
+echo "q to quit"
 
 read choice
 
@@ -68,6 +73,9 @@ case $choice in
 
 	4) action="delete a contact" ;;
 
+	q) echo "Good bye!";;
+
 	*) echo "Invalid choice!"; exit;
 esac
 
+done

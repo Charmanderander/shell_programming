@@ -1,0 +1,12 @@
+#!/bin/sh
+
+count=0
+
+for fname in *foo*
+do
+	if [ -f $fname ]; then
+		count=`expr $count + 1`
+	fi
+done
+
+echo "total number of files with the word foo is $count"

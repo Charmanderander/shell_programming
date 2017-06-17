@@ -19,8 +19,29 @@
 ############################################
 
 # Defining const variables
-fname=names.dat
 choice=foo
+
+if [ ! $# = 1 ]; then
+	echo Please enter a file name
+	exit
+elif [ ! -f $1 ]; then
+	echo $1 does not exist
+	echo "Would you like to create a file called $1? (y/n)"
+	read ans
+	if [ $ans = "y" ]; then
+		`touch $1`
+		echo $1 created!
+		fname=$1
+	else
+		echo $1 not created. Good bye!
+		exit
+	fi
+elif [ ! -r $1 ]; then
+	echo $1 is not writable
+	exit
+else
+	echo $1 is exists and is writable
+fi
 
 # function to create contacts
 do_create(){
@@ -78,6 +99,8 @@ echo "You have chosen to search for a contact"
 	
 	echo Enter a string to search
 	read searchstring
+	IFS=:
+	set -- `cat $fname`
 	echo `cat $fname | grep "$searchstring"`
 	echo `printf "\n"`
 }

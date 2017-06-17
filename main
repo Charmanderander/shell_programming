@@ -22,6 +22,66 @@
 fname=names.dat
 choice=foo
 
+# function to create contacts
+do_create(){
+echo "You have chosen to create a contact"
+correct=n
+
+while [ ! $correct = "y" ]
+do
+	# Creating a contact
+	echo -n "Please enter your First Name: "
+	read name
+	echo -n "Please enter your Surname: "
+	read sname
+	echo -n "Please enter your Address: "
+	read addr
+	echo -n "Please enter your City: "
+	read city
+	echo -n "Please enter your State: "
+	read state
+	echo -n "Please enter your Zip: "
+	read zip
+
+	echo "Is the following information correct?"
+	echo Name: $name
+	echo Surname: $sname
+	echo Address: $addr
+	echo City: $city
+	echo State: $state
+	echo Zip: $zip
+
+	read correct
+done        	
+	# Writing contents to a file
+	if [ -f $fname ]; then
+        	echo -e $name:$sname:$addr:$city:$state:$zip >> $fname
+	else
+		echo -e $name:$sname:$addr:$city:$state:$zip > $fname
+	fi
+}
+
+# function to view all contacts
+do_view(){
+echo "You have chosen to view all contacts"
+	
+	# View a contact
+	cat names.dat | sort -t ":" -k2 | awk -F : '{printf "\n%-14.14s %-16.16s %-20.20s %-15.15s %-6.6s %-5.5s\n", $1, $2, $3, $4, $5, $6}'
+	echo `printf "\n"`
+	echo Number of entries: `cat names.dat | wc -l`
+	echo `printf "\n"`
+}
+
+# function to search for contacts
+do_search(){
+echo "You have chosen to search for a contact"
+	
+	echo Enter a string to search
+	read searchstring
+	echo `cat $fname | grep "$searchstring"`
+	echo `printf "\n"`
+}
+
 while [ ! $choice = "q" ]
 do
 
@@ -36,41 +96,9 @@ echo "q to quit"
 read choice
 
 case $choice in
-	1) echo "You have chosen to create a contact"
-
-		# Creating a contact
-		if [ "$choice" == "1" ]; then
-			echo -n "Please enter your First Name: "
-			read name
-			echo -n "Please enter your Surname: "
-			read sname
-			echo -n "Please enter your Address: "
-			read addr
-			echo -n "Please enter your City: "
-			read city
-			echo -n "Please enter your State: "
-			read state
-			echo -n "Please enter your Zip: "
-			read zip
-        		
-			# Writing contents to a file
-			if [ -f $fname ]; then
-        			echo -e $name:$sname:$addr:$city:$state:$zip >> $fname
-			else
-				echo -e $name:$sname:$addr:$city:$state:$zip > $fname
-			fi
-		fi
-		;;
-
-	2) echo "You have chosen to view all contacts"
-	
-		# View a contact
-		cat names.dat | sort -t ":" -k2 | awk -F : '{printf "\n%-14.14s %-16.16s %-20.20s %-15.15s %-6.6s %-5.5s\n", $1, $2, $3, $4, $5, $6}'
-		echo `printf "\n"`
-		echo Number of entries: `cat names.dat | wc -l`
-		;;
-
-	3) action="search for a contact" ;;
+	1) do_create;;
+	2) do_view;;
+	3) do_search;;
 
 	4) action="delete a contact" ;;
 

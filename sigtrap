@@ -1,0 +1,7 @@
+#!/bin/sh
+
+while [ 1 = 1 ]
+do
+sleep 1
+trap "date" 30
+done

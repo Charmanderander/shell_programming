@@ -17,6 +17,10 @@
 # file should be displayed, as well as the #
 # number of entries inside.                #
 ############################################
+# Setting the trap for kill signals
+
+trap "trapper 1" 1 15
+trap "trapper 2" 2 3
 
 # Defining const variables
 choice=foo
@@ -41,7 +45,22 @@ elif [ ! -r $1 ]; then
 	exit
 else
 	echo $1 is exists and is writable
+	fname=$1
 fi
+
+trapper(){
+if [ $1 = 1 ]; then
+exit
+elif [ $1 = 2 ]; then
+	echo Do you really wish to quit?
+	read ans
+	if [ $ans = "y" ]; then
+		exit
+	else
+		echo Resuming program...
+	fi
+fi
+}
 
 # function to create contacts
 do_create(){
@@ -99,10 +118,18 @@ echo "You have chosen to search for a contact"
 	
 	echo Enter a string to search
 	read searchstring
-	IFS=:
-	set -- `cat $fname`
-	echo `cat $fname | grep "$searchstring"`
+	echo `cat $fname | grep "$searchstring" > /tmp/search_results.$$`
+	echo `cat /tmp/search_results.$$`
 	echo `printf "\n"`
+	echo Do you wish to delete these results?
+	read ans
+	if [ $ans = "y" ]; then
+		sed -e "/$searchstring/d" $fname > /tmp/deleted.$$
+		cat /tmp/deleted.$$ > $fname
+		echo Entries deleted
+	else
+		echo Entries not deleted
+	fi
 }
 
 while [ ! $choice = "q" ]
@@ -113,7 +140,6 @@ echo "Please enter your choice of action:"
 echo "1) Create a contact"
 echo "2) View all contacts"
 echo "3) Search a contact"
-echo "4) Delete a contact"
 echo "q to quit"
 
 read choice
@@ -122,8 +148,6 @@ case $choice in
 	1) do_create;;
 	2) do_view;;
 	3) do_search;;
-
-	4) action="delete a contact" ;;
 
 	q) echo "Good bye!";;
 
